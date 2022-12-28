@@ -10,6 +10,16 @@ function Game() {
   useEffect(() => {
     if(wordData){
       setWord(wordData[0])
+      setLetters(
+        wordData[0].split('').map(() => {
+          return ''
+        })
+      )
+      setColors(
+        wordData[0].split('').map(() => {
+          return 'white'
+        })
+      )
       console.log(wordData)
     }
   }, [wordData])
@@ -31,13 +41,6 @@ function Game() {
   const [letters, setLetters] = useState<string[]>([])
   const [colors, setColors] = useState<string[]>([])
 
-  useEffect(() => {
-    word?.split('').map((letter, index) => {
-      setLetters([...letters, ''])
-      setColors([...colors, 'white'])
-    })
-  }, [word])
-
 
   const handleSumbmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -55,6 +58,7 @@ function Game() {
       setColors([])
     }
   }
+  if (!word) return <div>Loading...</div>
 
       
   return (
