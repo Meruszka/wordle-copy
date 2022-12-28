@@ -1,50 +1,73 @@
 import { useEffect, useState } from 'react'
+import {useWord} from '../hooks/useWord'
 import Box from './Box'
+import Definition from './Definition'
 
 function Game() {
   const [word, setWord] = useState<string | null>(null)
-  const [definition, setDefinition] = useState<string | null>(null)
-  const [round, setRound] = useState(0)
+  const [wordData , wordError, wordLoading] = useWord()
+    
   useEffect(() => {
-    const fetchData = async () => {
-      const wordRes = await fetch('https://random-word-api.herokuapp.com/word')
-      const word = await wordRes.json()
-      setWord(word[0])
-
-      const definitionRes = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word[0]}`)
-      if (definitionRes.status === 404) {
-        setDefinition('No definition found') 
-      }else{
-        const defin = await definitionRes.json()
-        setDefinition(defin[0].meanings[0].definitions[0].definition)
-      }
+    if(wordData){
+      setWord(wordData[0])
+      console.log(wordData)
     }
-    fetchData()
-  }, [round])
+  }, [wordData])
 
-  const handleClick = () => {
-    word?.split('').forEach((letter, index) => {
-      const input = document.querySelector(`input[name=letter-${index}]`) as HTMLInputElement
-      input.value = ''
+  useEffect(() => {
+    if(wordError){
+      console.log(wordError)
+    }
+  }, [wordError])
+
+  useEffect(() => {
+    if(wordLoading){
+      console.log(wordLoading)
+    }
+  }, [wordLoading])
+
+
+  // Main game logic
+  const [letters, setLetters] = useState<string[]>([])
+  const [colors, setColors] = useState<string[]>([])
+
+  useEffect(() => {
+    word?.split('').map((letter, index) => {
+      setLetters([...letters, ''])
+      setColors([...colors, 'white'])
     })
-    setRound(round + 1)
+  }, [word])
+
+
+  const handleSumbmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+  }
+
+  const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    console.log(event.key)
+    if(event.key === 'Backspace'){
+      setLetters(letters.slice(0, -1))
+      setColors(colors.slice(0, -1))
+    }else if(event.key.length === 1){
+      setLetters([...letters, event.key])
+    }else if (event.key === 'Enter'){
+      setLetters([])
+      setColors([])
+    }
   }
 
       
   return (
-    <div className='overflow-hidden flex flex-col justify-center items-center'> 
+    <div className='overflow-hidden flex flex-col justify-center items-center h-screen w-screen' onKeyDown={keyDown} tabIndex={-1}> 
       <h1 className='text-2xl'>Random Word</h1>
       <h2 className='text-l'>with definition</h2>
       <main className='p-5 flex flex-col justify-center items-center'>
-      <div>
-        {definition}
-      </div>
-      <div className='flex flex-row'>
+      {/* <Definition word={word}/> */}
+      <form className='flex flex-row' onSubmit={handleSumbmit}>
       {word?.split('').map((letter, index) => (
-        <Box key={index} goodLetter={letter} index={index}/>
+        <Box key={index} letter={letters[index]} color={colors[index]}/>
       ))}
-      </div>
-      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={handleClick}>Next</button>
+      </form>
       </main>
     </div>
   )
