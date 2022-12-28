@@ -40,6 +40,7 @@ function Game() {
   // Main game logic
   const [letters, setLetters] = useState<string[]>([])
   const [colors, setColors] = useState<string[]>([])
+  const [index, setIndex] = useState<number>(0)
 
 
   const handleSumbmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,22 +48,37 @@ function Game() {
   }
 
   const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log(event.key)
     if(event.key === 'Backspace'){
-      setLetters(letters.slice(0, -1))
-      setColors(colors.slice(0, -1))
+      let newLetters = [...letters]
+      newLetters[index - 1] = ''
+      setLetters(newLetters)
+
+      let newColors = [...colors]
+      newColors[index - 1] = 'white'
+      setColors(newColors)
+
+      setIndex(index - 1)
+
     }else if(event.key.length === 1){
-      setLetters([...letters, event.key])
+      let newLetters = [...letters]
+      newLetters[index] = event.key
+      setLetters(newLetters)
+      setIndex(index + 1)
     }else if (event.key === 'Enter'){
       setLetters([])
       setColors([])
     }
   }
-  if (!word) return <div>Loading...</div>
+  if (!word) return <div
+  className='overflow-hidden flex flex-row justify-center items-center h-screen w-screen'
+  >
+    <div className="m-2 h-5 w-5 animate-spin rounded-full border-b-2 border-sky-300"></div>
+    <span>Loading...</span>
+    </div>
 
       
   return (
-    <div className='overflow-hidden flex flex-col justify-center items-center h-screen w-screen' onKeyDown={keyDown} tabIndex={-1}> 
+    <div className='overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none' onKeyDown={keyDown} tabIndex={-1}> 
       <h1 className='text-2xl'>Random Word</h1>
       <h2 className='text-l'>with definition</h2>
       <main className='p-5 flex flex-col justify-center items-center'>
