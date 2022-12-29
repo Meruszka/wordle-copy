@@ -108,6 +108,7 @@ function Game() {
         checkWin()
       }else{
         // check letters and set colors
+      checkLetters()
       setRound(round + 1)
       setIndex(0)
       }
@@ -119,6 +120,23 @@ function Game() {
       console.log('You Win!')
       setWin(true)
     }
+  }
+
+  const checkLetters = () => {
+    let everyColor = colors
+    let newColors = [...colors[round]]
+    if (word === null) return
+    for (let i = 0; i < word?.length; i++) {
+      if(letters[round][i] === word?.[i]){
+        newColors[i] = 'green'
+      }else if(word.includes(letters[round][i])){
+        newColors[i] = 'yellow'
+      }else{
+        newColors[i] = 'red'
+      }
+    }
+    everyColor[round] = newColors
+    setColors(everyColor)
   }
   // Loding screen
   if (!word) {
