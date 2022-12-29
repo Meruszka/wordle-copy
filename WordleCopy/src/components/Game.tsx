@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
-import {useWord} from '../hooks/useWord'
+import { useWord } from '../hooks/useWord'
 import Box from './Box'
 import UsedLetters from './UsedLetters'
 import { Letters, Colors, UsedLetters as UsedLettersType } from '../types/types'
 
 function Game() {
   const [word, setWord] = useState<string | null>(null)
-  const [wordData , wordError, wordLoading] = useWord()
+  const [wordData, wordError, wordLoading] = useWord()
   const maxRounds = 5
   const RoundsArray = Array.from(Array(maxRounds).keys())
-    
+
   useEffect(() => {
-    if(wordData){
+    if (wordData) {
       setWord(wordData[0])
       for (let i = 0; i < maxRounds; i++) {
         setLetters((prev) => {
@@ -19,7 +19,7 @@ function Game() {
             ...prev,
             [i]: wordData[0].split('').map(() => {
               return ''
-            })
+            }),
           }
         })
         setColors((prev) => {
@@ -27,7 +27,7 @@ function Game() {
             ...prev,
             [i]: wordData[0].split('').map(() => {
               return 'white'
-            })
+            }),
           }
         })
       }
@@ -36,17 +36,16 @@ function Game() {
   }, [wordData])
 
   useEffect(() => {
-    if(wordError){
+    if (wordError) {
       console.log(wordError)
     }
   }, [wordError])
 
   useEffect(() => {
-    if(wordLoading){
+    if (wordLoading) {
       console.log(wordLoading)
     }
   }, [wordLoading])
-
 
   // Main game logic
   const [letters, setLetters] = useState<Letters>([])
@@ -57,7 +56,7 @@ function Game() {
   const [usedLetters, setUsedLetters] = useState<UsedLettersType>({})
 
   const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if(event.key === 'Backspace'){
+    if (event.key === 'Backspace') {
       if (index === 0) return
       let everyLetter = letters
       let newLetters = [...letters[round]]
@@ -72,30 +71,29 @@ function Game() {
       setColors(everyColor)
 
       setIndex(index - 1)
-
-    }else if(event.key.length === 1){
+    } else if (event.key.length === 1) {
       let everyLetter = letters
       let newLetters = [...letters[round]]
       newLetters[index] = event.key
       everyLetter[round] = newLetters
       setLetters(everyLetter)
       setIndex(index + 1)
-    }else if (event.key === 'Enter'){
-      if (word){
+    } else if (event.key === 'Enter') {
+      if (word) {
         if (index < word?.length) return
       }
       // check win if yes end game
-      checkWin()      
+      checkWin()
       // check letters and set colors
       checkLetters()
       // add used letters
       let newLetters = [...letters[round]]
       newLetters.forEach((letter) => {
-        if(letter !== ''){
+        if (letter !== '') {
           setUsedLetters((prev) => {
             return {
               ...prev,
-              [letter]: colors[round][newLetters.indexOf(letter)]
+              [letter]: colors[round][newLetters.indexOf(letter)],
             }
           })
         }
@@ -106,7 +104,7 @@ function Game() {
   }
 
   const checkWin = () => {
-    if(letters[round].join('') === word){
+    if (letters[round].join('') === word) {
       console.log('You Win!')
       setWin(true)
     }
@@ -117,11 +115,11 @@ function Game() {
     let newColors = [...colors[round]]
     if (word === null) return
     for (let i = 0; i < word?.length; i++) {
-      if(letters[round][i] === word?.[i]){
+      if (letters[round][i] === word?.[i]) {
         newColors[i] = 'green'
-      }else if(word.includes(letters[round][i])){
+      } else if (word.includes(letters[round][i])) {
         newColors[i] = 'yellow'
-      }else{
+      } else {
         newColors[i] = 'gray'
       }
     }
@@ -131,19 +129,23 @@ function Game() {
   // Loding screen
   if (!word) {
     return (
-    <div className='overflow-hidden flex flex-row justify-center items-center h-screen w-screen'>
-    <div className="m-2 h-5 w-5 animate-spin rounded-full border-b-2 border-sky-300"></div>
-    <span>Loading...</span>
-    </div>)
+      <div className='overflow-hidden flex flex-row justify-center items-center h-screen w-screen'>
+        <div className='m-2 h-5 w-5 animate-spin rounded-full border-b-2 border-sky-300'></div>
+        <span>Loading...</span>
+      </div>
+    )
   }
   // Win screen
   if (win) {
     return (
       <div className='flex flex-col justify-center items-center h-screen w-screen'>
         <h1 className='text-2xl'>You Win!</h1>
-        <button 
-        className='bg-sky-300 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded'
-        onClick={() => window.location.reload()}>Play Again</button>
+        <button
+          className='bg-sky-300 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded'
+          onClick={() => window.location.reload()}
+        >
+          Play Again
+        </button>
       </div>
     )
   }
@@ -153,33 +155,39 @@ function Game() {
       return (
         <div className='flex flex-col justify-center items-center h-screen w-screen'>
           <h1 className='text-2xl'>You Lose!</h1>
-          <button 
-          className='bg-sky-300 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded'
-          onClick={() => window.location.reload()}>Play Again</button>
+          <button
+            className='bg-sky-300 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded'
+            onClick={() => window.location.reload()}
+          >
+            Play Again
+          </button>
         </div>
       )
     }
   }
 
-      
   return (
-    <div className='overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none bg-gradient-to-tl from-lime-100 via-lime-300 to-lime-900' onKeyDown={keyDown} tabIndex={-1}> 
+    <div
+      className='overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none bg-gradient-to-tl from-lime-100 via-lime-300 to-lime-900'
+      onKeyDown={keyDown}
+      tabIndex={-1}
+    >
       <main className='p-5 flex flex-col justify-center items-center'>
-      <h1 className='text-2xl'>Random Word</h1>
+        <h1 className='text-2xl'>Random Word</h1>
         {/* <h2 className='text-l'>with definition</h2> */}
         {/* <Definition word={word}/> */}
-      <div className='flex flex-col'>
-      {RoundsArray.map((ele, Rindex) => {
-        return (
-          <div className='flex flex-row' key={Rindex}>
-            {word?.split('').map((letter, index) => (
-              <Box key={index} letter={letters[ele][index]} color={colors[ele][index]}/>
-            ))}
-          </div>
-        )
-      })}
-      </div>
-      <UsedLetters usedLetters={usedLetters}/>
+        <div className='flex flex-col'>
+          {RoundsArray.map((ele, Rindex) => {
+            return (
+              <div className='flex flex-row' key={Rindex}>
+                {word?.split('').map((letter, index) => (
+                  <Box key={index} letter={letters[ele][index]} color={colors[ele][index]} />
+                ))}
+              </div>
+            )
+          })}
+        </div>
+        <UsedLetters usedLetters={usedLetters} />
       </main>
     </div>
   )

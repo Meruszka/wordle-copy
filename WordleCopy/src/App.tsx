@@ -1,9 +1,9 @@
 import Game from './components/Game'
 
-function App() {      
+function App() {
   return (
     <div>
-      <Game/>
+      <Game />
     </div>
   )
 }
