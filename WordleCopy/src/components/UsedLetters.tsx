@@ -10,13 +10,13 @@ function UsedLetters({ usedLetters }: { usedLetters: UsedLettersType }) {
   return (
     <div className="flex justify-center items-center flex-col m-10">
       <h3>Used Letters</h3>
-        <div>
+        <div className='flex flex-col justify-center items-center'>
             {keyboard.map((row, i) => {
                 return (
                     <div key={i} className="flex flex-row">
                         {row.split('').map((letter, i) => {
                             return (
-                                <div key={i} className="flex justify-center items-center w-10 h-10" style={{backgroundColor: usedLetters[letter]}}>
+                                <div key={i} className="flex justify-center items-center w-10 h-10 rounded bg-white" style={{backgroundColor: usedLetters[letter]}}>
                                     <span>{letter}</span>
                                 </div>
                             )

@@ -163,7 +163,7 @@ function Game() {
 
       
   return (
-    <div className='overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none' onKeyDown={keyDown} tabIndex={-1}> 
+    <div className='overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none bg-gradient-to-tl from-lime-100 via-lime-300 to-lime-900' onKeyDown={keyDown} tabIndex={-1}> 
       <main className='p-5 flex flex-col justify-center items-center'>
       <h1 className='text-2xl'>Random Word</h1>
         {/* <h2 className='text-l'>with definition</h2> */}
