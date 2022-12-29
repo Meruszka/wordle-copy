@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import axios, { AxiosRequestConfig } from 'axios'
+import axios from 'axios'
+import { WordData } from '../types/word/main'
 
 axios.defaults.baseURL = 'https://random-word-api.herokuapp.com/word'
 
 export const useWord = () => {
-  const [data, setData] = useState<any>(null)
-  const [error, setError] = useState<any>(null)
+  const [data, setData] = useState<WordData>()
+  const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(true)
 
   const fetchData = async (): Promise<void> => {
@@ -15,8 +16,8 @@ export const useWord = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setError('Axios Error with Message: ' + error.message)
-      } else {
-        setError(error)
+      } else if (error instanceof Error) {
+        setError('Error with Message: ' + error.message)
       }
       setLoading(false)
     } finally {

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
@@ -7,7 +8,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -26,6 +26,9 @@ module.exports = {
   settings: {
     'import/resolver': {
       typescript: {},
+    },
+    react: {
+      version: 'detect',
     },
   },
 }

@@ -58,22 +58,22 @@ function Game() {
   const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Backspace') {
       if (index === 0) return
-      let everyLetter = letters
-      let newLetters = [...letters[round]]
+      const everyLetter = letters
+      const newLetters = [...letters[round]]
       newLetters[index - 1] = ''
       everyLetter[round] = newLetters
       setLetters(everyLetter)
 
-      let everyColor = colors
-      let newColors = [...colors[round]]
+      const everyColor = colors
+      const newColors = [...colors[round]]
       newColors[index - 1] = 'white'
       everyColor[round] = newColors
       setColors(everyColor)
 
       setIndex(index - 1)
     } else if (event.key.length === 1) {
-      let everyLetter = letters
-      let newLetters = [...letters[round]]
+      const everyLetter = letters
+      const newLetters = [...letters[round]]
       newLetters[index] = event.key
       everyLetter[round] = newLetters
       setLetters(everyLetter)
@@ -87,7 +87,7 @@ function Game() {
       // check letters and set colors
       checkLetters()
       // add used letters
-      let newLetters = [...letters[round]]
+      const newLetters = [...letters[round]]
       newLetters.forEach((letter) => {
         if (letter !== '') {
           setUsedLetters((prev) => {
@@ -111,8 +111,8 @@ function Game() {
   }
 
   const checkLetters = () => {
-    let everyColor = colors
-    let newColors = [...colors[round]]
+    const everyColor = colors
+    const newColors = [...colors[round]]
     if (word === null) return
     for (let i = 0; i < word?.length; i++) {
       if (letters[round][i] === word?.[i]) {

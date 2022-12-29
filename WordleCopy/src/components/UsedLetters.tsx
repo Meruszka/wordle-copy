@@ -1,4 +1,4 @@
-import { UsedLetters as UsedLettersType } from '../types/types'
+import { UsedLetters as UsedLettersType } from '../types/common/main'
 
 function UsedLetters({ usedLetters }: { usedLetters: UsedLettersType }) {
   const keyboard = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
