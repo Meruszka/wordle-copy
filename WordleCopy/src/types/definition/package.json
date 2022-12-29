@@ -1,6 +1,6 @@
 {
-  "name": "definition",
-  "version": "0.0.1",
-  "typings": "main.d.ts",
-  "description": "Definition types for the definition package"
+    "name": "definition",
+    "version": "0.0.1",
+    "typings": "main.d.ts",
+    "description": "Definition types for the definition package"
 }

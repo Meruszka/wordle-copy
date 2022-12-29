@@ -1,3 +1,3 @@
 export interface WordData {
-  word: string[]
+    word: string[];
 }

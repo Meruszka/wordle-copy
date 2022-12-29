@@ -1,6 +1,6 @@
 {
-  "name": "word",
-  "version": "0.0.1",
-  "typings": "main.d.ts",
-  "description": "Word type for the word package"
+    "name": "word",
+    "version": "0.0.1",
+    "typings": "main.d.ts",
+    "description": "Word type for the word package"
 }
