@@ -1,5 +1,7 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
+import schema from './types/word/wordSchema';
+import root from './types/word/wordResolver';
 
 
 import routes from './routes';
@@ -17,6 +19,7 @@ class App {
         this.server.use(express.json());
         this.server.use('/graphql', graphqlHTTP({
             graphiql: true,
+            rootValue: root,
             schema: schema
             }));
     }

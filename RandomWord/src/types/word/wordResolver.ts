@@ -1,3 +1,5 @@
+// Words are stored in memory, so they will be lost after server restart
+// Should be replaced with database OR file storage...
 const words = [
     {id: 0, word: 'kot', language: 'pl'},
     {id: 1, word: 'pies', language: 'pl'},
