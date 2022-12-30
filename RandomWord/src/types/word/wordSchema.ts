@@ -1,6 +1,6 @@
 import { buildSchema } from 'graphql';
 
-const wordSchema = buildSchema(`
+export const wordSchema = buildSchema(`
     input WordInput {
         word: String!
         language: String!
@@ -24,4 +24,9 @@ const wordSchema = buildSchema(`
     }
 `)
 
-export default wordSchema;
+export interface Word {
+    id: number;
+    word: string;
+    language: string;
+}
+

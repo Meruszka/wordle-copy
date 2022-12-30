@@ -1,11 +1,13 @@
 // Words are stored in memory, so they will be lost after server restart
 // Should be replaced with database OR file storage...
+import { Word } from './wordSchema';
+
 const words = [
     {id: 0, word: 'kot', language: 'pl'},
     {id: 1, word: 'pies', language: 'pl'},
-    {id: 2, word: 'kot', language: 'en'},
+    {id: 2, word: 'cat', language: 'en'},
     {id: 3, word: 'dog', language: 'en'},
-
+    {id: 4, word: 'kotek', language: 'pl'},
 ]
 const getRandomWord = (args: {language: string}) : string | undefined => {
     const wordsByLanguage = words.filter(word => word.language === args.language);
