@@ -8,6 +8,7 @@ import Loading from './Loading';
 
 function Game() {
     const [word, setWord] = useState<string | null>(null);
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     const [wordData, wordError, wordLoading] = useWord();
     const maxRounds = 5;
     const roundsArray = Array.from(Array(maxRounds).keys());
@@ -37,17 +38,17 @@ function Game() {
         }
     }, [wordData]);
 
-    useEffect(() => {
-        if (wordError) {
-            console.log(wordError);
-        }
-    }, [wordError]);
+    // useEffect(() => {
+    //     if (wordError) {
+    //         console.log(wordError);
+    //     }
+    // }, [wordError]);
 
-    useEffect(() => {
-        if (wordLoading) {
-            console.log(wordLoading);
-        }
-    }, [wordLoading]);
+    // useEffect(() => {
+    //     if (wordLoading) {
+    //         console.log(wordLoading);
+    //     }
+    // }, [wordLoading]);
 
     // Main game logic
     const [letters, setLetters] = useState<Letters>([]);
