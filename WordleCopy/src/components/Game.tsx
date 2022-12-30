@@ -10,7 +10,7 @@ function Game() {
     const [word, setWord] = useState<string | null>(null);
     const [wordData, wordError, wordLoading] = useWord();
     const maxRounds = 5;
-    const RoundsArray = Array.from(Array(maxRounds).keys());
+    const roundsArray = Array.from(Array(maxRounds).keys());
 
     useEffect(() => {
         if (wordData) {
@@ -54,7 +54,7 @@ function Game() {
     const [colors, setColors] = useState<Colors>([]);
     const [index, setIndex] = useState<number>(0);
     const [round, setRound] = useState<number>(0);
-    const [win, setWin] = useState<boolean>(false);
+    const [win, setWin] = useState<number>(0);
     const [usedLetters, setUsedLetters] = useState<UsedLettersType>({});
 
     const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -82,12 +82,14 @@ function Game() {
             setIndex(index + 1);
         } else if (event.key === 'Enter') {
             if (word) {
-                if (index < word?.length) return;
+                if (index < word.length) return;
             }
             // check win if yes end game
             checkWin();
+
             // check letters and set colors
             checkLetters();
+
             // add used letters
             const newLetters = [...letters[round]];
             newLetters.forEach((letter) => {
@@ -106,9 +108,14 @@ function Game() {
     };
 
     const checkWin = () => {
-        if (letters[round].join('') === word) {
-            console.log('You Win!');
-            setWin(true);
+        if (word) {
+            if (round === maxRounds - 1) {
+                setWin(2);
+            }
+            const newLetters = [...letters[round]];
+            if (newLetters.join('') === word) {
+                setWin(1);
+            }
         }
     };
 
@@ -118,44 +125,35 @@ function Game() {
         if (word === null) return;
         for (let i = 0; i < word?.length; i++) {
             if (letters[round][i] === word?.[i]) {
-                newColors[i] = 'green';
+                // green
+                newColors[i] = '#349130';
             } else if (word.includes(letters[round][i])) {
-                newColors[i] = 'yellow';
+                // yellow
+                newColors[i] = '#CAD02F';
             } else {
-                newColors[i] = 'gray';
+                // gray
+                newColors[i] = '#757575';
             }
         }
         everyColor[round] = newColors;
         setColors(everyColor);
     };
-    useEffect(() => {
-        // Loding screen
-        if (!word) {
-            <Loading />;
-        }
-        // Win screen
-        if (win) {
-            <EndGame score="You Win!" />;
-        }
-        // Lose screen
-        if (round === maxRounds - 1) {
-            if (win === false) {
-                <EndGame score="You Lose!" />;
-            }
-        }
-    }, [win, round]);
 
     return (
         <div
-            className="overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none bg-gradient-to-tl from-lime-100 via-lime-300 to-lime-900"
+            className="overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none"
             onKeyDown={keyDown}
             tabIndex={-1}>
+            {!word ? <Loading /> : null}
+            {win === 1 ? <EndGame score="You Win!" /> : null}
+            {win === 2 ? <EndGame score="You Lose!" /> : null}
+
             <main className="p-5 flex flex-col justify-center items-center">
                 <h1 className="text-2xl">Random Word</h1>
                 {/* <h2 className='text-l'>with definition</h2> */}
                 {/* <Definition word={word}/> */}
                 <div className="flex flex-col">
-                    {RoundsArray.map((ele, Rindex) => {
+                    {roundsArray.map((ele, Rindex) => {
                         return (
                             <div className="flex flex-row" key={Rindex}>
                                 {word?.split('').map((letter, index) => (

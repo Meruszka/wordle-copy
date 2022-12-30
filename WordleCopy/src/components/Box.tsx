@@ -10,9 +10,9 @@ function Box({ letter, color }: { letter: string; color: string }) {
 
     return (
         <div
-            className="h-10 w-10 border-2 border-sky-500 flex justify-center items-center m-1"
+            className="h-10 w-10 border-2 border-gray-300 flex justify-center items-center m-1"
             style={{ backgroundColor: backgroundColor }}>
-            <span>{letter}</span>
+            <span className="uppercase">{letter}</span>
         </div>
     );
 }

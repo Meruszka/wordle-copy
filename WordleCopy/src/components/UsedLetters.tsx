@@ -13,9 +13,9 @@ function UsedLetters({ usedLetters }: { usedLetters: UsedLettersType }) {
                                 return (
                                     <div
                                         key={i}
-                                        className="flex justify-center items-center w-10 h-10 rounded bg-white"
+                                        className="flex justify-center m-1 items-center w-10 h-10 rounded bg-gray-300 border-2 border-gray-300"
                                         style={{ backgroundColor: usedLetters[letter] }}>
-                                        <span>{letter}</span>
+                                        <span className="uppercase">{letter}</span>
                                     </div>
                                 );
                             })}

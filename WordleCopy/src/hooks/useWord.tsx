@@ -18,7 +18,6 @@ export const useWord = () => {
             } else if (error instanceof Error) {
                 setError('Error with Message: ' + error.message);
             }
-            setLoading(false);
         } finally {
             setLoading(false);
         }

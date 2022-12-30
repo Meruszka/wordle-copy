@@ -21,7 +21,6 @@ export const useDefinition = (word: string | null) => {
             } else if (error instanceof Error) {
                 setError('Error with Message: ' + error.message);
             }
-            setLoading(false);
         } finally {
             setLoading(false);
         }
