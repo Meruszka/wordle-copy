@@ -10,6 +10,7 @@ const words = [
     {id: 4, word: 'kotek', language: 'pl'},
 ]
 const getRandomWord = (args: {language: string}) : string | undefined => {
+    console.log(args);
     const wordsByLanguage = words.filter(word => word.language === args.language);
     const randomIndex = Math.floor(Math.random() * wordsByLanguage.length);
     return wordsByLanguage[randomIndex].word;
@@ -42,12 +43,13 @@ const deleteWord = (args: {id: number}) : Word | undefined => {
     return word;
 }
 
-const root = {
-    randomWordPL: () => getRandomWord({language: 'pl'}),
-    randomWordEN: () => getRandomWord({language: 'en'}),
-    createWord: (args: {input: {word: string, language: string}}) => createWord(args),
-    updateWord: (args: {id: number, input: {word: string, language: string}}) => updateWord(args),
-    deleteWord: (args: {id: number}) => deleteWord(args)
+const resolvers = {
+    Query : {
+        createWord: (args: {input: {word: string, language: string}}) => createWord(args),
+        updateWord: (args: {id: number, input: {word: string, language: string}}) => updateWord(args),
+        deleteWord: (args: {id: number}) => deleteWord(args),
+        randomWord: (args: {language: string}) => getRandomWord(args)
+    }
 }
 
-export default root;
+export default resolvers;

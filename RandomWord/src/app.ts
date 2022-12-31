@@ -1,32 +1,38 @@
 import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
 import { wordSchema } from './types/word/wordSchema';
-import root from './types/word/wordResolver';
-
+import resolvers from './types/word/wordResolver';
+import cors from 'cors';
 
 import routes from './routes';
 
 class App {
-    public server;
+    public app;
 
     constructor() {
-        this.server = express();
+        this.app = express();
         this.middlewares();
         this.routes();
     }
 
-    private middlewares() {
-        this.server.use(express.json());
-        this.server.use('/graphql', graphqlHTTP({
-            graphiql: true,
-            rootValue: root,
-            schema: wordSchema
-            }));
+    private async middlewares() {
+        const server = new ApolloServer({ typeDefs: wordSchema, resolvers: resolvers });
+        await server.start();
+
+        this.app.use(
+            express.json(),
+            cors({
+                origin: 'http://localhost:3000'
+            }),
+            expressMiddleware(server),
+            );
     }
 
     private routes() {
-        this.server.use(routes);
+        this.app.use(routes);
     }
+
 }
 
-export default new App().server;
+export default new App().app;

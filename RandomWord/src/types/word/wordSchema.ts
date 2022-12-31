@@ -1,6 +1,11 @@
-import { buildSchema } from 'graphql';
+export const wordSchema = `#graphql
+    type Query {
+        createWord(input: WordInput): Word
+        updateWord(id: ID!, input: WordInput): Word
+        deleteWord(id: ID!): Word
+        randomWord(language: String!): Word
+    }
 
-export const wordSchema = buildSchema(`
     input WordInput {
         word: String!
         language: String!
@@ -10,19 +15,7 @@ export const wordSchema = buildSchema(`
         id: ID!
         word: String!
     }
-
-    type Query {
-        randomWordPL: String
-        randomWordEN: String
-        createWord(input: WordInput): Word
-        updateWord(id: ID!, input: WordInput): Word
-        deleteWord(id: ID!): Word
-    }
-
-    type Mutation {
-        createWord(input: WordInput): Word
-    }
-`)
+`
 
 export interface Word {
     id: number;
