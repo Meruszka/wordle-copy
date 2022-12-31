@@ -1,31 +1,20 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { gql, useQuery } from '@apollo/client';
 
-axios.defaults.baseURL = 'https://random-word-api.herokuapp.com/word';
+const WORD_QUERY_PL = gql`
+    {
+        randomWord(language: "pl")
+    }
+`;
 
-export const useWord = () => {
-    const [data, setData] = useState<string[]>();
-    const [error, setError] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(true);
+const WORD_QUERY_EN = gql`
+    {
+        randomWord(language: "en")
+    }
+`;
 
-    const fetchData = async (): Promise<void> => {
-        try {
-            const response = await axios.get('');
-            setData(response.data);
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                setError('Axios Error with Message: ' + error.message);
-            } else if (error instanceof Error) {
-                setError('Error with Message: ' + error.message);
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+export const useWord = ({ language }: { language: string }) => {
+    const WORD_QUERY = language === 'pl' ? WORD_QUERY_PL : WORD_QUERY_EN;
+    const { data, error, loading } = useQuery(WORD_QUERY);
 
     return [data, error, loading] as const;
 };

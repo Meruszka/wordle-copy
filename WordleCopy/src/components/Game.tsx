@@ -9,18 +9,20 @@ import Loading from './Loading';
 function Game() {
     const [word, setWord] = useState<string | null>(null);
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    const [wordData, wordError, wordLoading] = useWord();
+    const [wordData, wordError, wordLoading] = useWord({
+        language: 'pl',
+    });
     const maxRounds = 5;
     const roundsArray = Array.from(Array(maxRounds).keys());
 
     useEffect(() => {
         if (wordData) {
-            setWord(wordData[0]);
+            setWord(wordData.randomWordPL);
             for (let i = 0; i < maxRounds; i++) {
                 setLetters((prev) => {
                     return {
                         ...prev,
-                        [i]: wordData[0].split('').map(() => {
+                        [i]: wordData.randomWordPL.split('').map(() => {
                             return '';
                         }),
                     };
@@ -28,7 +30,7 @@ function Game() {
                 setColors((prev) => {
                     return {
                         ...prev,
-                        [i]: wordData[0].split('').map(() => {
+                        [i]: wordData.randomWordPL.split('').map(() => {
                             return 'white';
                         }),
                     };
@@ -103,9 +105,10 @@ function Game() {
                 if (index < word.length) return;
             }
             // check if word exists
-            if (!wordExists) {
-                return;
-            }
+            // if (!wordExists) {
+            //     console.log('word does not exist');
+            //     return;
+            // }
 
             // check win if yes end game
             checkWin();
