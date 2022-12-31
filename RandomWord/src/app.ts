@@ -23,16 +23,15 @@ class App {
         this.app.use(
             express.json(),
             cors({
-                origin: 'http://localhost:3000'
+                origin: 'http://localhost:3000',
             }),
-            expressMiddleware(server),
-            );
+            expressMiddleware(server)
+        );
     }
 
     private routes() {
         this.app.use(routes);
     }
-
 }
 
 export default new App().app;

@@ -3,53 +3,61 @@
 import { Word } from './wordSchema';
 
 const words = [
-    {id: 0, word: 'kot', language: 'pl'},
-    {id: 1, word: 'pies', language: 'pl'},
-    {id: 2, word: 'cat', language: 'en'},
-    {id: 3, word: 'dog', language: 'en'},
-    {id: 4, word: 'kotek', language: 'pl'},
-]
-const getRandomWord = (args: {language: string}) : string | undefined => {
+    { id: 0, word: 'kot', language: 'pl' },
+    { id: 1, word: 'pies', language: 'pl' },
+    { id: 2, word: 'cat', language: 'en' },
+    { id: 3, word: 'dog', language: 'en' },
+    { id: 4, word: 'kotek', language: 'pl' },
+];
+const getRandomWord = (args: { language: string }): string | undefined => {
     console.log(args);
-    const wordsByLanguage = words.filter(word => word.language === args.language);
+    const wordsByLanguage = words.filter((word) => word.language === args.language);
     const randomIndex = Math.floor(Math.random() * wordsByLanguage.length);
     return wordsByLanguage[randomIndex].word;
-}
+};
 
-const createWord = (args: {input: {word: string, language: string}}) : Word => {
+const createWord = (args: { input: { word: string; language: string } }): Word => {
     const word = {
         id: words.length + 1,
         word: args.input.word,
-        language: args.input.language
-    }
+        language: args.input.language,
+    };
     words.push(word);
     return word;
-}
+};
 
-const updateWord = (args: {id: number, input: {word: string, language: string}}) : Word | undefined => {
-    const word = words.find(word => word.id === args.id);
+const updateWord = (args: {
+    id: number;
+    input: { word: string; language: string };
+}): Word | undefined => {
+    const word = words.find((word) => word.id === args.id);
     if (word) {
         word.word = args.input.word;
         word.language = args.input.language;
     }
     return word;
-}
+};
 
-const deleteWord = (args: {id: number}) : Word | undefined => {
-    const word = words.find(word => word.id === args.id);
+const deleteWord = (args: { id: number }): Word | undefined => {
+    const word = words.find((word) => word.id === args.id);
     if (word) {
         words.splice(words.indexOf(word), 1);
     }
     return word;
-}
+};
 
 const resolvers = {
-    Query : {
-        createWord: (args: {input: {word: string, language: string}}) => createWord(args),
-        updateWord: (args: {id: number, input: {word: string, language: string}}) => updateWord(args),
-        deleteWord: (args: {id: number}) => deleteWord(args),
-        randomWord: (args: {language: string}) => getRandomWord(args)
-    }
-}
+    Query: {
+        randomWord: (args: { language: string }) => getRandomWord(args),
+    },
+    Mutation: {
+        createWord: (args: { input: { word: string; language: string } }) =>
+        createWord(args),
+    updateWord: (args: { id: number; input: { word: string; language: string } }) =>
+        updateWord(args),
+    deleteWord: (args: { id: number }) => deleteWord(args),
+    },
+
+};
 
 export default resolvers;
