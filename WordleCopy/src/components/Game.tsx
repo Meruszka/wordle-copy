@@ -5,24 +5,27 @@ import UsedLetters from './UsedLetters';
 import { Letters, Colors, UsedLetters as UsedLettersType } from '../types/common/main';
 import EndGame from './EndGame';
 import Loading from './Loading';
+import SwitchLang from './SwitchLang';
 
 function Game() {
     const [word, setWord] = useState<string | null>(null);
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    const [gameLanguage, setGameLanguage] = useState<string>('pl');
     const [wordData, wordError, wordLoading] = useWord({
-        language: 'pl',
+        language: gameLanguage,
     });
     const maxRounds = 5;
     const roundsArray = Array.from(Array(maxRounds).keys());
+    const [possibleLanguages, setPossibleLanguages] = useState<string[]>(['pl', 'en']);
 
     useEffect(() => {
         if (wordData) {
-            setWord(wordData.randomWordPL);
+            setWord(wordData.randomWord);
             for (let i = 0; i < maxRounds; i++) {
                 setLetters((prev) => {
                     return {
                         ...prev,
-                        [i]: wordData.randomWordPL.split('').map(() => {
+                        [i]: wordData.randomWord.split('').map(() => {
                             return '';
                         }),
                     };
@@ -30,7 +33,7 @@ function Game() {
                 setColors((prev) => {
                     return {
                         ...prev,
-                        [i]: wordData.randomWordPL.split('').map(() => {
+                        [i]: wordData.randomWord.split('').map(() => {
                             return 'white';
                         }),
                     };
@@ -173,8 +176,10 @@ function Game() {
             {!word ? <Loading /> : null}
             {win === 1 ? <EndGame score="You Win!" /> : null}
             {win === 2 ? <EndGame score="You Lose!" /> : null}
+            <SwitchLang possibleLanguages={possibleLanguages} setGameLanguage={setGameLanguage}/>
 
             <main className="p-5 flex flex-col justify-center items-center">
+
                 <h1 className="text-2xl">Random Word</h1>
                 {/* <h2 className='text-l'>with definition</h2> */}
                 {/* <Definition word={word}/> */}

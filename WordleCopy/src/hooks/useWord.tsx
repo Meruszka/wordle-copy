@@ -15,6 +15,5 @@ const WORD_QUERY_EN = gql`
 export const useWord = ({ language }: { language: string }) => {
     const WORD_QUERY = language === 'pl' ? WORD_QUERY_PL : WORD_QUERY_EN;
     const { data, error, loading } = useQuery(WORD_QUERY);
-
     return [data, error, loading] as const;
 };

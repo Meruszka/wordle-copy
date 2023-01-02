@@ -1,14 +1,25 @@
 // Words are stored in memory, so they will be lost after server restart
 // Should be replaced with database OR file storage...
 import { Word } from './wordSchema';
+import fs from 'fs';
 
-const words = [
-    { id: 0, word: 'kot', language: 'pl' },
-    { id: 1, word: 'pies', language: 'pl' },
-    { id: 2, word: 'cat', language: 'en' },
-    { id: 3, word: 'dog', language: 'en' },
-    { id: 4, word: 'kotek', language: 'pl' },
-];
+const words: Word[] = [];
+
+const populateWords = (language: string) => {
+    
+    fs.readFile(`./data/${language}.txt`, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        const wordsToPush = data.split('\n');
+        wordsToPush.forEach((word) => {
+            words.push({ id: words.length + 1, word, language });
+        })
+    });
+};
+populateWords('pl');
+
 const getRandomWord = (args: { language: string }): string | undefined => {
     console.log(args);
     const wordsByLanguage = words.filter((word) => word.language === args.language);
@@ -48,7 +59,7 @@ const deleteWord = (args: { id: number }): Word | undefined => {
 
 const resolvers = {
     Query: {
-        randomWord: (args: { language: string }) => getRandomWord(args),
+        randomWord: (_:any, args: { language: string }) => getRandomWord(args),
     },
     Mutation: {
         createWord: (args: { input: { word: string; language: string } }) =>
