@@ -5,23 +5,26 @@ import fs from 'fs';
 
 const words: Word[] = [];
 
-const populateWords = (language: string) => {
-    
-    fs.readFile(`./data/${language}.txt`, 'utf8', (err, data) => {
+const populateWords = (language: string) => {    
+    fs.readFile(`${process.cwd()}/src/types/word/data/${language}.txt`, 'utf8', (err, data) => {
         if (err) {
             console.error(err)
             return
         }
         const wordsToPush = data.split('\n');
         wordsToPush.forEach((word) => {
-            words.push({ id: words.length + 1, word, language });
+            if (word.length <= 8){
+                console.log(word);
+                words.push({ id: words.length + 1, word, language });
+            }
         })
     });
 };
 populateWords('pl');
 
+console.log(words);
+
 const getRandomWord = (args: { language: string }): string | undefined => {
-    console.log(args);
     const wordsByLanguage = words.filter((word) => word.language === args.language);
     const randomIndex = Math.floor(Math.random() * wordsByLanguage.length);
     return wordsByLanguage[randomIndex].word;

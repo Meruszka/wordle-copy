@@ -14,7 +14,7 @@ function Game() {
     const [wordData, wordError, wordLoading] = useWord({
         language: gameLanguage,
     });
-    const maxRounds = 5;
+    const maxRounds = 7;
     const roundsArray = Array.from(Array(maxRounds).keys());
     const [possibleLanguages, setPossibleLanguages] = useState<string[]>(['pl', 'en']);
 
