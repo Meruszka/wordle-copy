@@ -1,11 +1,17 @@
-function SwitchLang({possibleLanguages, setGameLanguage}: {possibleLanguages: string[], setGameLanguage: (language: string) => void}) {
+
+import { languages } from './languages';
+
+function SwitchLang({setGameLanguage}: {setGameLanguage: (language: string) => void}) {
   
   return (
     <div>
-        <select onChange={(e) => setGameLanguage(e.target.value)}>
-            {possibleLanguages.map((language) => (
-                <option key={language} value={language}>
-                    {language}
+        <select onChange={(e) => setGameLanguage(e.target.value)} className="p-2 capitalize">
+            <option key='0' value={''}>
+                Select Language
+            </option>
+            {languages.map((language) => (
+                <option key={language.short} value={language.short}>
+                    {language.language}
                 </option>
             ))}
         </select>

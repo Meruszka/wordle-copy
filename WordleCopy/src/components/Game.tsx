@@ -16,7 +16,6 @@ function Game() {
     });
     const maxRounds = 7;
     const roundsArray = Array.from(Array(maxRounds).keys());
-    const [possibleLanguages, setPossibleLanguages] = useState<string[]>(['pl', 'en']);
 
     useEffect(() => {
         if (wordData) {
@@ -176,7 +175,7 @@ function Game() {
             {!word ? <Loading /> : null}
             {win === 1 ? <EndGame score="You Win!" /> : null}
             {win === 2 ? <EndGame score="You Lose!" /> : null}
-            <SwitchLang possibleLanguages={possibleLanguages} setGameLanguage={setGameLanguage}/>
+            <SwitchLang setGameLanguage={setGameLanguage}/>
 
             <main className="p-5 flex flex-col justify-center items-center">
 
@@ -198,7 +197,7 @@ function Game() {
                         );
                     })}
                 </div>
-                <UsedLetters usedLetters={usedLetters} />
+                <UsedLetters usedLetters={usedLetters} language={gameLanguage} />
             </main>
         </div>
     );

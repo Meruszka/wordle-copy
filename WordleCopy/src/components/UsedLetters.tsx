@@ -1,7 +1,8 @@
 import { UsedLetters as UsedLettersType } from '../types/common/main';
+import { languages } from './languages';
 
-function UsedLetters({ usedLetters }: { usedLetters: UsedLettersType }) {
-    const keyboard = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+function UsedLetters({ usedLetters, language }: { usedLetters: UsedLettersType, language: string }) {
+    const keyboard = languages.find((lang) => lang.short === language)?.keyboard || [];
     return (
         <div className="flex justify-center items-center flex-col m-10">
             <h3>Used Letters</h3>
