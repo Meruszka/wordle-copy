@@ -1,7 +1,5 @@
-type Word = {
-    id: number;
+export type Word = {
     word: string;
-    language: string;
 };
 
 // Path: RandomWord/src/types/word/main.d.ts

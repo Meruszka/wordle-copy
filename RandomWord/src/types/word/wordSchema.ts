@@ -4,25 +4,11 @@ export const wordSchema = `#graphql
     }
 
     type Mutation {
-        createWord(input: WordInput): Word
-        updateWord(id: ID!, input: WordInput): Word
-        deleteWord(id: ID!): Word
+        createWord(input: WordInput): String
     }
 
     input WordInput {
         word: String!
         language: String!
     }
-
-
-    type Word {
-        id: ID!
-        word: String!
-    }
 `;
-
-export interface Word {
-    id: number;
-    word: string;
-    language: string;
-}
