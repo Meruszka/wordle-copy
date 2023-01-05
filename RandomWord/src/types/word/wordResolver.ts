@@ -10,6 +10,10 @@ const getRandomWord = (args: { language: string }): string | undefined => {
     const words = lines.split('\n');
     let word = words[Math.floor(Math.random() * words.length)];
     word = word.replace('\r', '');
+    // If word is too long, try again only once
+    if(word.length > 8){
+        word = words[Math.floor(Math.random() * words.length)];
+    }
     return word;
 };
 
