@@ -5,6 +5,8 @@ export const wordSchema = `#graphql
 
     type Mutation {
         createWord(input: WordInput): String
+        deleteWord(input: WordInput): String
+        updateWord(input: WordInput): String
     }
 
     input WordInput {

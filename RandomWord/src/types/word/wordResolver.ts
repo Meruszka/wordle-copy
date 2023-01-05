@@ -21,6 +21,47 @@ const createWord = (args: { input: { word: string; language: string } }): string
     return args.input.word;
 };
 
+const deleteWord = (args: { input: { word: string; language: string } }): string => {
+    fs.readFile(`${process.cwd()}/src/types/word/data/${args.input.language}.txt`, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        const lines = data.split('\n');
+        const index = lines.indexOf(args.input.word);
+        if (index > -1) {
+            lines.splice(index, 1);
+        }
+        fs.writeFile(`${process.cwd()}/src/types/word/data/${args.input.language}.txt`, lines.join('\n'), (err) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+        });
+    });
+    return args.input.word;
+};
+
+const updateWord = (args: { input: { word: string; language: string } }): string => {
+    fs.readFile(`${process.cwd()}/src/types/word/data/${args.input.language}.txt`, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        const lines = data.split('\n');
+        const index = lines.indexOf(args.input.word);
+        if (index > -1) {
+            lines[index] = args.input.word;
+        }
+        fs.writeFile(`${process.cwd()}/src/types/word/data/${args.input.language}.txt`, lines.join('\n'), (err) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+        });
+    });
+    return args.input.word;
+};
 
 const resolvers = {
     Query: {
@@ -29,6 +70,10 @@ const resolvers = {
     Mutation: {
         createWord: (args: { input: { word: string; language: string } }) =>
         createWord(args),
+        deleteWord: (args: { input: { word: string; language: string } }) =>
+        deleteWord(args),
+        updateWord: (args: { input: { word: string; language: string } }) =>
+        updateWord(args),
     },
 
 };
