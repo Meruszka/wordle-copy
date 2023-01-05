@@ -9,7 +9,6 @@ import SwitchLang from './SwitchLang';
 
 function Game() {
     const [word, setWord] = useState<string | null>(null);
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     const [gameLanguage, setGameLanguage] = useState<string>('pl');
     const [wordData, wordError, wordLoading] = useWord({
         language: gameLanguage,
@@ -96,6 +95,7 @@ function Game() {
 
             setIndex(index - 1);
         } else if (event.key.length === 1) {
+            if(index === word?.length) return;
             const everyLetter = letters;
             const newLetters = [...letters[round]];
             newLetters[index] = event.key;
