@@ -8,12 +8,7 @@ const getRandomWord = (args: { language: string }): string | undefined => {
         'utf8'
     );
     const words = lines.split('\n');
-    let word = words[Math.floor(Math.random() * words.length)];
-    word = word.replace('\r', '');
-    // If word is too long or too short, try again only once
-    if(word.length > 8 || word.length < 3){
-        word = words[Math.floor(Math.random() * words.length)];
-    }
+    const word = words[Math.floor(Math.random() * words.length)].replace('\r', '');
     return word;
 };
 
