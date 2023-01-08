@@ -8,7 +8,7 @@ import Loading from './Loading';
 import SwitchLang from './SwitchLang';
 
 function Game() {
-    const [word, setWord] = useState<string | null>(null);
+    const [word, setWord] = useState<string>('');
     const [gameLanguage, setGameLanguage] = useState<string>('pl');
     const [wordData, wordError, wordLoading] = useWord({
         language: gameLanguage,
@@ -157,7 +157,7 @@ function Game() {
                 newColors[i] = '#349130';
             } else if (word.includes(letters[round][i])) {
                 // yellow
-                newColors[i] = '#CAD02F';
+                newColors[i] = '#eef536';
             } else {
                 // gray
                 newColors[i] = '#757575';
@@ -173,13 +173,13 @@ function Game() {
             onKeyDown={keyDown}
             tabIndex={-1}>
             {!word ? <Loading /> : null}
-            {win === 1 ? <EndGame score="You Win!" /> : null}
-            {win === 2 ? <EndGame score="You Lose!" /> : null}
+            {win === 1 ? <EndGame score="You Win!" word={word} /> : null}
+            {win === 2 ? <EndGame score="You Lose!" word={word} /> : null}
             <SwitchLang setGameLanguage={setGameLanguage}/>
 
             <main className="p-5 flex flex-col justify-center items-center">
 
-                <h1 className="text-2xl">Random Word</h1>
+                <h1 className="text-2xl">Random Word: {word.length}</h1>
                 {/* <h2 className='text-l'>with definition</h2> */}
                 {/* <Definition word={word}/> */}
                 <div className="flex flex-col">
