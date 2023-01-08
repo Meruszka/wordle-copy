@@ -61,23 +61,6 @@ function Game() {
     const [round, setRound] = useState<number>(0);
     const [win, setWin] = useState<number>(0);
     const [usedLetters, setUsedLetters] = useState<UsedLettersType>({});
-    const [wordExists, setWordExists] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (letters[round] && letters[round].length === word?.length) {
-            checkIfWordExists(letters[round].join(''));
-        }
-    }, [letters[round]]);
-
-    const checkIfWordExists = async (word: string) => {
-        const response = await fetch(`https://api.datamuse.com/words?sp=${word}&md=d`);
-        const data = await response.json();
-        console.log(data);
-        if (data.length > 0) {
-            setWordExists(true);
-        }
-        setWordExists(false);
-    };
 
     const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Backspace') {
@@ -107,12 +90,6 @@ function Game() {
             if (word) {
                 if (index < word.length) return;
             }
-            // check if word exists
-            // if (!wordExists) {
-            //     console.log('word does not exist');
-            //     return;
-            // }
-
             // check win if yes end game
             checkWin();
 
