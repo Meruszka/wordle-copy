@@ -6,7 +6,7 @@ import { Letters, Colors, UsedLetters as UsedLettersType } from '../types/common
 import EndGame from './EndGame';
 import Loading from './Loading';
 import SwitchLang from './SwitchLang';
-import {languages} from './languages';
+import { languages } from './languages';
 
 function Game() {
     const [word, setWord] = useState<string>('');
@@ -40,7 +40,10 @@ function Game() {
             }
             // console.log(wordData)
         }
-    }, [wordData]);
+        if (wordError) {
+            console.log(wordError);
+        }
+    }, [wordLoading, wordError]);
 
     // useEffect(() => {
     //     if (wordError) {
@@ -79,7 +82,7 @@ function Game() {
 
             setIndex(index - 1);
         } else if (event.key.length === 1) {
-            if(index === word?.length) return;
+            if (index === word?.length) return;
             const everyLetter = letters;
             const newLetters = [...letters[round]];
             newLetters[index] = event.key;
@@ -153,10 +156,12 @@ function Game() {
             {!word ? <Loading /> : null}
             {win === 1 ? <EndGame score="You Win!" word={word} /> : null}
             {win === 2 ? <EndGame score="You Lose!" word={word} /> : null}
-            <SwitchLang setGameLanguage={setGameLanguage} defaultLanguage={languages[1]}/>
+            <SwitchLang
+                setGameLanguage={setGameLanguage}
+                defaultLanguage={languages[1]}
+            />
 
             <main className="p-5 flex flex-col justify-center items-center">
-
                 <h1 className="text-2xl">Random Word: {word.length}</h1>
                 {/* <h2 className='text-l'>with definition</h2> */}
                 {/* <Definition word={word}/> */}

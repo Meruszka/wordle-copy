@@ -17,6 +17,7 @@
         "axios": "^1.2.1",
         "eslint-import-resolver-typescript": "^3.5.2",
         "eslint-plugin-import": "^2.26.0",
+        "fs": "^0.0.1-security",
         "graphql": "^16.6.0",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
