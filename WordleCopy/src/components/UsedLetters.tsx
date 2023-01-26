@@ -1,7 +1,16 @@
+import React from 'react';
 import { UsedLetters as UsedLettersType } from '../types/common/main';
 import { languages } from './languages';
 
-function UsedLetters({ usedLetters, language }: { usedLetters: UsedLettersType, language: string }) {
+function UsedLetters({
+    usedLetters,
+    language,
+    onPress,
+}: {
+    usedLetters: UsedLettersType;
+    language: string;
+    onPress: (key: string) => void;
+}) {
     const keyboard = languages.find((lang) => lang.short === language)?.keyboard || [];
     return (
         <div className="flex justify-center items-center flex-col m-10">
@@ -12,12 +21,13 @@ function UsedLetters({ usedLetters, language }: { usedLetters: UsedLettersType, 
                         <div key={i} className="flex flex-row">
                             {row.split('').map((letter, i) => {
                                 return (
-                                    <div
+                                    <button
                                         key={i}
                                         className="flex justify-center m-1 items-center w-10 h-10 rounded bg-gray-300 border-2 border-gray-300"
-                                        style={{ backgroundColor: usedLetters[letter] }}>
+                                        style={{ backgroundColor: usedLetters[letter] }}
+                                        onClick={() => onPress(letter)}>
                                         <span className="uppercase">{letter}</span>
-                                    </div>
+                                    </button>
                                 );
                             })}
                         </div>

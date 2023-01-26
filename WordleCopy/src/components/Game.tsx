@@ -65,8 +65,8 @@ function Game() {
     const [win, setWin] = useState<number>(0);
     const [usedLetters, setUsedLetters] = useState<UsedLettersType>({});
 
-    const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === 'Backspace') {
+    const keyDown = (key: string) => {
+        if (key === 'Backspace') {
             if (index === 0) return;
             const everyLetter = letters;
             const newLetters = [...letters[round]];
@@ -81,15 +81,15 @@ function Game() {
             setColors(everyColor);
 
             setIndex(index - 1);
-        } else if (event.key.length === 1) {
+        } else if (key.length === 1) {
             if (index === word?.length) return;
             const everyLetter = letters;
             const newLetters = [...letters[round]];
-            newLetters[index] = event.key;
+            newLetters[index] = key;
             everyLetter[round] = newLetters;
             setLetters(everyLetter);
             setIndex(index + 1);
-        } else if (event.key === 'Enter') {
+        } else if (key === 'Enter') {
             if (word) {
                 if (index < word.length) return;
             }
@@ -151,7 +151,7 @@ function Game() {
     return (
         <div
             className="overflow-hidden flex flex-col justify-center items-center h-screen w-screen outline-none"
-            onKeyDown={keyDown}
+            onKeyDown={(event) => keyDown(event.key)}
             tabIndex={-1}>
             {!word ? <Loading /> : null}
             {win === 1 ? <EndGame score="You Win!" word={word} /> : null}
@@ -180,7 +180,11 @@ function Game() {
                         );
                     })}
                 </div>
-                <UsedLetters usedLetters={usedLetters} language={gameLanguage} />
+                <UsedLetters
+                    usedLetters={usedLetters}
+                    language={gameLanguage}
+                    onPress={keyDown}
+                />
             </main>
         </div>
     );
