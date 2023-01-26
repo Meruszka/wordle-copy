@@ -15,6 +15,19 @@ function UsedLetters({
     return (
         <div className="flex justify-center items-center flex-col m-10">
             <h3>Used Letters</h3>
+            <div className="flex flex-row justify-center items-center">
+                {['Backspace', 'Enter'].map((letter, i) => {
+                    return (
+                        <button
+                            key={i}
+                            className="flex justify-center m-1 items-center p-2 rounded bg-gray-300 border-2 border-gray-300"
+                            style={{ backgroundColor: usedLetters[letter] }}
+                            onClick={() => onPress(letter)}>
+                            <span className="uppercase">{letter}</span>
+                        </button>
+                    );
+                })}
+            </div>
             <div className="flex flex-col justify-center items-center">
                 {keyboard.map((row, i) => {
                     return (
