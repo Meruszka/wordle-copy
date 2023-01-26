@@ -13,7 +13,7 @@ const WORD_QUERY_EN = gql`
 `;
 
 export const useWord = ({ language }: { language: string }) => {
-    if (import.meta.env.MODE === 'development') {
+    if (import.meta.env.MODE === 'development' || import.meta.env.API_URL === 'locally') {
         const WORDS = [
             'zasłużony',
             'przymusowy',
